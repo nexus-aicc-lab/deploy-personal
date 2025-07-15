@@ -1,0 +1,12 @@
+# deploy-personal용 docker-compose.yml
+version: "3"
+services:
+  db:
+    image: postgres:15
+    container_name: deploy-personal-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydeploypersonaldb
+    ports:
+      - "5435:5432" # 외부:내부 포트
