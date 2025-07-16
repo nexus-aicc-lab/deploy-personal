@@ -6,12 +6,14 @@ import { Button } from '@/shared/ui/button';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { useApiForLogin } from '@/features/auth/hooks/useApiForLogin';
+import { useAuthStore } from '@/features/auth/store/authStore';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const mutation = useApiForLogin();
     const router = useRouter();
+    const setAuth = useAuthStore((state) => state.setAuth);
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
@@ -19,8 +21,9 @@ export default function LoginPage() {
             { email, password },
             {
                 onSuccess: (data) => {
+                    // Zustand store에 사용자 정보와 토큰 저장
+                    setAuth(data.user, data.token);
                     toast.success('🎉 로그인 성공!');
-                    // 예: 홈으로 이동하거나 대시보드로
                     router.push('/');
                 },
                 onError: (err: any) => {
@@ -39,15 +42,17 @@ export default function LoginPage() {
                     placeholder="이메일"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                 />
                 <Input
                     type="password"
                     placeholder="비밀번호"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    required
                 />
-                <Button type="submit" disabled={mutation.isLoading}>
-                    로그인
+                <Button type="submit" disabled={mutation.isLoading} className="w-full">
+                    {mutation.isPending ? '로그인 중...' : '로그인'}
                 </Button>
             </form>
         </div>
