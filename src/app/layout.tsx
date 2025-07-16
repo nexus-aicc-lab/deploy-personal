@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Providers from "./providers";
-import Header from "@/shared/ui/Header";
 import Footer from "@/shared/ui/Footer";
+import Header from "../../widgets/header";
 
 // Google 폰트 설정
 const inter = Inter({
