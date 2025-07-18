@@ -1,8 +1,12 @@
-// src/features/auth/hooks/useApiForLogin.ts
 import { useMutation } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { apiForLogin, LoginRequest, LoginResponse } from '../api/apiForLogin';
 
+type LoginErrorResponse = {
+    error: string;
+};
+
 export const useApiForLogin = () =>
-    useMutation<LoginResponse, any, LoginRequest>({
+    useMutation<LoginResponse, AxiosError<LoginErrorResponse>, LoginRequest>({
         mutationFn: apiForLogin,
     });
