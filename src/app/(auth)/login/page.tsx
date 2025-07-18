@@ -51,7 +51,7 @@ export default function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />
-                <Button type="submit" disabled={mutation.isLoading} className="w-full">
+                <Button type="submit" disabled={mutation.isPending} className="w-full">
                     {mutation.isPending ? '로그인 중...' : '로그인'}
                 </Button>
             </form>
