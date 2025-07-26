@@ -14,22 +14,29 @@ export default function AuthMenuForHeader() {
     const [isOpen, setIsOpen] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const mutation = useApiForLogin();
+    const mutationForLogin = useApiForLogin();
     const router = useRouter();
 
     const handleLogin = (e: React.FormEvent) => {
         e.preventDefault();
-        mutation.mutate(
+        mutationForLogin.mutate(
             { email, password },
             {
                 onSuccess: (data) => {
-                    setAuth(data.user, data.accessToken);
+                    // 수정된 응답 구조에 맞게 변경
+                    const user = {
+                        id: data.userId,
+                        email: data.email,
+                        name: data.name
+                    };
+                    setAuth(user, data.token);
                     toast.success('🎉 로그인 성공!');
                     setEmail('');
                     setPassword('');
                 },
                 onError: (err: any) => {
-                    toast.error(err?.response?.data?.error ?? '로그인 실패!');
+                    // 에러 메시지 구조 변경
+                    toast.error(err?.response?.data?.message || '로그인 실패!');
                 },
             }
         );
@@ -38,7 +45,7 @@ export default function AuthMenuForHeader() {
     const handleLogout = () => {
         logout();
         toast.success('로그아웃되었습니다');
-        router.push('/');
+        router.push('/personal/dashboard');
         setIsOpen(false);
     };
 
@@ -90,20 +97,24 @@ export default function AuthMenuForHeader() {
 
                                 {/* 메뉴 아이템들 */}
                                 <div className="py-1">
-                                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                                        </svg>
-                                        프로필 설정
-                                    </button>
+                                    <Link href="/personal/profile" onClick={() => setIsOpen(false)}>
+                                        <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                            <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                            </svg>
+                                            프로필 설정
+                                        </button>
+                                    </Link>
 
-                                    <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                        <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                        설정
-                                    </button>
+                                    <Link href="/personal/settings" onClick={() => setIsOpen(false)}>
+                                        <button className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                            <svg className="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                            설정
+                                        </button>
+                                    </Link>
 
                                     <div className="border-t my-1"></div>
 
@@ -148,13 +159,13 @@ export default function AuthMenuForHeader() {
                 />
                 <Button
                     type="submit"
-                    disabled={mutation.isPending}
+                    disabled={mutationForLogin.isPending}
                     size="sm"
                     className="h-9"
                 >
-                    {mutation.isPending ? '로그인...' : '로그인'}
+                    {mutationForLogin.isPending ? '로그인...' : '로그인'}
                 </Button>
-                <Link href="/signup">
+                <Link href="/personal/signup">
                     <Button variant="outline" size="sm" className="h-9">
                         회원가입
                     </Button>
@@ -163,12 +174,12 @@ export default function AuthMenuForHeader() {
 
             {/* 모바일 로그인 폼 (헤더에서 별도 처리) */}
             <div className="md:hidden flex items-center space-x-2">
-                <Link href="/login">
+                <Link href="/personal/login">
                     <Button variant="outline" size="sm">
                         로그인
                     </Button>
                 </Link>
-                <Link href="/signup">
+                <Link href="/personal/signup">
                     <Button size="sm">
                         회원가입
                     </Button>
