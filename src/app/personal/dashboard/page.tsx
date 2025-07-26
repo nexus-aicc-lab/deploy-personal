@@ -67,7 +67,7 @@ export default function HomePage() {
                 <div className="w-full lg:w-3/5 flex items-center justify-center">
                     <div className="rounded-xl overflow-hidden bg-white">
                         <Image
-                            src="/personal/sample.png"
+                            src="/sample.png"
                             alt="콜센터 상담사 현황 대시보드"
                             width={800}
                             height={450}
