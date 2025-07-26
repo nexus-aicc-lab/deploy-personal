@@ -54,6 +54,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
             password,
             authNo: showAuthInput ? authNo : undefined
         });
+
     };
 
     // 인증번호 요청 처리

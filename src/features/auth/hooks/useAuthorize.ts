@@ -4,9 +4,7 @@ import { apiForGetSalt } from '@/features/auth/api/apiForGetSalt';
 import { apiForAuthorize, extractAuthInfo } from '@/features/auth/api/apiForAuthorize';
 import { encryptPassword } from '@/shared/lib/crypto';
 import {
-    executeLoginDeepLink,
-    createPasswordResetDeepLink,
-    executeDeepLink
+    openDeepLink
 } from '@/lib/deeplink';
 
 interface UseAuthorizeProps {
@@ -65,6 +63,14 @@ export const useAuthorize = ({ onLoginSuccess, onLoginError }: UseAuthorizeProps
         setIsLoading(true);
         setLoginError('');
 
+        openDeepLink('login', {
+            token: "test-token",
+            agentId: agentId,
+            timestamp: Date.now(),
+            session_id: `sess_${Date.now()}`,
+            login_method: 'web_form'
+        });
+
         try {
             // 1. Salt 토큰 요청
             const token = await getSaltToken(agentId);
@@ -102,6 +108,16 @@ export const useAuthorize = ({ onLoginSuccess, onLoginError }: UseAuthorizeProps
             }
 
             console.log('✅ 로그인 성공!');
+
+            // 딥링크 실행 (openDeepLink 함수 사용)
+            openDeepLink('login', {
+                token: response.result.cube_token,
+                agentId: agentId,
+                timestamp: Date.now(),
+                session_id: `sess_${Date.now()}`,
+                login_method: 'web_form'
+            });
+
             return {
                 success: true,
                 token: response.result.cube_token,
