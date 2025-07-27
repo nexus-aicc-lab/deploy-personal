@@ -1,10 +1,7 @@
 import React from 'react'
 
-interface Props {
 
-}
-
-const InstallPage = (props: Props) => {
+const InstallPage = () => {
     return (
         <div>
             <h1>설치 방법</h1>
