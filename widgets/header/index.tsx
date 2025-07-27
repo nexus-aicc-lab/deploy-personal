@@ -20,10 +20,10 @@ export default function Header() {
                     {/* 🧭 중앙 메뉴 */}
                     <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-700">
                         {/* ⚠️ 변경된 부분: href를 '/document'에서 '/login'으로 수정 */}
-                        <Link href="/login" className="hover:text-emerald-600 transition-colors">
+                        <Link href="/personal/login" className="hover:text-emerald-600 transition-colors">
                             Login
                         </Link>
-                        <Link href="/menual" className="hover:text-emerald-600 transition-colors">
+                        <Link href="/personal/menual" className="hover:text-emerald-600 transition-colors">
                             manual
                         </Link>
                         <Link href="/qa" className="hover:text-emerald-600 transition-colors">
