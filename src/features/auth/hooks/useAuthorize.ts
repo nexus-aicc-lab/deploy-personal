@@ -197,13 +197,13 @@ export const useAuthorize = ({ onLoginSuccess, onLoginError }: UseAuthorizeProps
             }
 
             // 딥링크 URL 생성 및 실행
-            const resetUrl = createPasswordResetDeepLink({
-                token,
-                agentId
-            });
+            // const resetUrl = createPasswordResetDeepLink({
+            //     token,
+            //     agentId
+            // });
 
-            console.log('🔒 비밀번호 재설정 딥링크:', resetUrl);
-            executeDeepLink(resetUrl);
+            // console.log('🔒 비밀번호 재설정 딥링크:', resetUrl);
+            // executeDeepLink(resetUrl);
 
             return { success: true };
         } catch (error) {

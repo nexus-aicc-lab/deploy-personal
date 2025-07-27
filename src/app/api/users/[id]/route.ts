@@ -7,10 +7,13 @@ import { eq } from 'drizzle-orm'
 // GET /api/users/:id
 export async function GET(
     request: NextRequest,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const userId = parseInt(params.id, 10)
+        // Next.js 15에서는 params가 Promise이므로 await 필요
+        const { id } = await params
+        const userId = parseInt(id, 10)
+
         const [user] = await db
             .select({
                 id: users.id,
