@@ -23,7 +23,7 @@ export default function Header() {
                         <Link href="/personal/login" className="hover:text-emerald-600 transition-colors">
                             Login
                         </Link>
-                        <Link href="/personal/menual" className="hover:text-emerald-600 transition-colors">
+                        <Link href="/personal/manual" className="hover:text-emerald-600 transition-colors">
                             manual
                         </Link>
                         <Link href="/qa" className="hover:text-emerald-600 transition-colors">
