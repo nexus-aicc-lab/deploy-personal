@@ -7,7 +7,7 @@ import HeaderTransitionBar from '@/shared/ui/HeaderTransitionBar';
 export default function Header() {
     return (
         <header className="relative bg-white shadow-sm border-b">
-            <div className="container mx-auto px-6 py-4">
+            <div className="container mx-auto px-6 py-1">
                 <div className="flex justify-between items-center">
                     {/* 👑 타이틀 */}
                     <Link

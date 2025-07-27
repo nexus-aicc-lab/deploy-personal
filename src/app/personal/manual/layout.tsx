@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import Footer from "@/shared/ui/Footer";
 import Providers from "../providers";
 import Header from "../../../../widgets/header";
-import SidebarForMenual from "./ui/DashBoardSideBar";
+import SidebarForMenual from "./ui/SideBarForMenual";
 
 // Google 폰트
 const inter = Inter({
