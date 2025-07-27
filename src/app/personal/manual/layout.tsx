@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import Footer from "@/shared/ui/Footer";
 import Providers from "../providers";
 import Header from "../../../../widgets/header";
-import SidebarForMenual from "./ui/SideBarForMenual";
+import SidebarForManual from "./ui/SideBarForManual";
 
 // Google 폰트
 const inter = Inter({
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     description: "대시보드 페이지",
 };
 
-export default function MenualLayout({
+export default function ManualLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -31,7 +31,7 @@ export default function MenualLayout({
 
                     {/* 사이드바 + 본문 */}
                     <div className="flex flex-1">
-                        <SidebarForMenual /> {/* ✅ children 없음 */}
+                        <SidebarForManual /> {/* ✅ children 없음 */}
 
                         <main className="flex-1 p-6 overflow-auto">
                             {children} {/* ✅ 여기에서만 본문 출력 */}

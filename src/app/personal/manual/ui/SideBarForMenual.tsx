@@ -289,7 +289,7 @@ function SidebarMenuItem({ item, depth = 0 }: { item: MenuItem; depth?: number }
     )
 }
 
-export default function SidebarForMenual() {
+export default function SidebarForManual() {
     return (
         <aside className="w-56 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 overflow-y-auto">
             <div className="py-3 px-2">

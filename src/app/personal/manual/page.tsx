@@ -4,12 +4,12 @@ interface Props {
 
 }
 
-const MenualPage = (props: Props) => {
+const ManualPage = (props: Props) => {
     return (
         <div>
-            MenualPage
+            ManualPage
         </div>
     )
 }
 
-export default MenualPage
+export default ManualPage
