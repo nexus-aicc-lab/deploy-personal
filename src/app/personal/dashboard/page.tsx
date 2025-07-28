@@ -2,6 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/features/auth/store/authStore';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,9 +18,17 @@ type GitHubRelease = {
 };
 
 export default function DashboardPage() {
-    const { user } = useAuthStore();
+    const router = useRouter();
+    const { isAuthenticated, user } = useAuthStore();
     const [latestRelease, setLatestRelease] = useState<GitHubRelease | null>(null);
     const [loading, setLoading] = useState(true);
+
+    // 인증 체크
+    useEffect(() => {
+        if (!isAuthenticated) {
+            router.push('/personal/login2');
+        }
+    }, [isAuthenticated, router]);
 
     // GitHub 릴리즈 정보 가져오기
     useEffect(() => {
@@ -39,8 +48,22 @@ export default function DashboardPage() {
             }
         };
 
-        fetchLatestRelease();
-    }, []);
+        if (isAuthenticated) {
+            fetchLatestRelease();
+        }
+    }, [isAuthenticated]);
+
+    // 인증되지 않은 경우 로딩 화면
+    if (!isAuthenticated || !user) {
+        return (
+            <div className="flex items-center justify-center min-h-screen bg-gray-50">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+                    <p className="mt-4 text-gray-500">인증 확인 중...</p>
+                </div>
+            </div>
+        );
+    }
 
     // 설치 파일 찾기 (exe 파일 우선)
     const getDownloadUrl = () => {
@@ -62,20 +85,9 @@ export default function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-gray-50">
+
             {/* 메인 컨텐츠 */}
             <div className="max-w-7xl mx-auto px-6 md:px-10 py-16 space-y-16">
-                {/* 사용자 환영 메시지 (선택적) */}
-                {user && (
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-gray-800">
-                            안녕하세요, {user.name}님! 👋
-                        </h1>
-                        <p className="text-gray-600 mt-2">
-                            콜센터 관리 시스템에 오신 것을 환영합니다.
-                        </p>
-                    </div>
-                )}
-
                 {/* Dashboard + Actions */}
                 <section className="flex flex-col lg:flex-row items-start gap-8 lg:gap-12">
                     {/* Dashboard 이미지 */}
@@ -216,15 +228,6 @@ export default function DashboardPage() {
                             <p className="text-sm text-gray-600 mt-1">전체 업무</p>
                         </div>
                     </div>
-                </section>
-
-                {/* 로그아웃 버튼 (필요한 경우) */}
-                <section className="text-center">
-                    <Button asChild variant="outline" className="px-8">
-                        <Link href="/personal/login2">
-                            🚪 로그아웃
-                        </Link>
-                    </Button>
                 </section>
             </div>
         </div>
