@@ -26,7 +26,7 @@ export default function ManualLayout({
             <Providers>
                 <div className="flex flex-col min-h-screen">
                     {/* 헤더 */}
-                    <Header />
+                    {/* <Header /> */}
 
                     {/* 사이드바 + 본문 */}
                     <div className="flex flex-1">

@@ -144,7 +144,7 @@ export default function Header() {
                         </div>
 
                         <Link
-                            href="/personal/reporting"
+                            href="/personal/report-tool"
                             className="hover:text-emerald-600 transition-colors h-12 flex items-center justify-center px-2 leading-none"
                         >
                             Report Tool
