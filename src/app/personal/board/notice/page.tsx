@@ -1,10 +1,9 @@
 // src/app/personal/board/notice/page.tsx
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { Calendar, User, Eye, ChevronRight, ChevronLeft, AlertCircle, Loader2, Search } from 'lucide-react'
 import { useNoticeList, useNoticeDetail } from '@/features/board/hooks/useNoticeBoard'
-import type { Notice } from '@/features/board/types/board.types'
 import CreateButtonForNoticeBoard from './ui/CreateButtonForNoticeBoard'
 
 const NoticePage = () => {
@@ -21,7 +20,8 @@ const NoticePage = () => {
     })
     const { data: detailData, isLoading: detailLoading } = useNoticeDetail(selectedNoticeId || '')
 
-    const notices = listData?.notices || []
+    // useMemo를 사용하여 notices 메모이제이션
+    const notices = useMemo(() => listData?.notices || [], [listData?.notices])
     const pagination = listData?.pagination
     const selectedNotice = detailData?.notice
 
@@ -134,7 +134,7 @@ const NoticePage = () => {
                         <div className="flex items-center justify-center h-full text-gray-500">
                             <div className="text-center">
                                 <Search className="w-12 h-12 text-gray-300 mx-auto mb-2" />
-                                <p>"{searchTerm}" 검색 결과가 없습니다</p>
+                                <p>&ldquo;{searchTerm}&rdquo; 검색 결과가 없습니다</p>
                             </div>
                         </div>
                     ) : (
