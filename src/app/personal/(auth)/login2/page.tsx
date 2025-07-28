@@ -13,6 +13,7 @@ export default function LoginPage2() {
     const [showPassword, setShowPassword] = useState(false);
     const [loginError, setLoginError] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [isRedirecting, setIsRedirecting] = useState(false); // 리다이렉트 상태 추가
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -34,13 +35,18 @@ export default function LoginPage2() {
         mutation.mutate(
             { email, password },
             {
-                onSuccess: (data) => {
+                onSuccess: async (data) => {
                     const user = {
                         id: data.userId,
                         email: data.email,
                         name: data.name,
                     };
-                    setAuth(user, data.token);
+
+                    // 리다이렉트 중임을 표시
+                    setIsRedirecting(true);
+
+                    // 상태 업데이트
+                    await setAuth(user, data.token);
 
                     // 기억하기 기능
                     if (rememberMe) {
@@ -51,16 +57,14 @@ export default function LoginPage2() {
 
                     toast.success('🎉 로그인 성공!');
 
-                    // Zustand 상태가 완전히 업데이트될 때까지 대기
-                    setTimeout(() => {
-                        // returnUrl이 있으면 해당 경로로, 없으면 대시보드로
-                        const searchParams = new URLSearchParams(window.location.search);
-                        const returnUrl = searchParams.get('returnUrl');
-                        router.push(returnUrl ? decodeURIComponent(returnUrl) : '/personal/dashboard');
-                    }, 300); // 충분한 시간 확보
+                    // 즉시 리다이렉트
+                    const searchParams = new URLSearchParams(window.location.search);
+                    const returnUrl = searchParams.get('returnUrl');
+                    router.push(returnUrl ? decodeURIComponent(returnUrl) : '/personal/dashboard');
                 },
                 onError: (error: any) => {
                     setLoginError(error?.response?.data?.message || '로그인 실패!');
+                    setIsRedirecting(false);
                 },
             }
         );
@@ -84,6 +88,9 @@ export default function LoginPage2() {
 
     // 컴포넌트 마운트시 기억된 이메일 불러오기 및 인증 상태 확인
     React.useEffect(() => {
+        // 리다이렉트 중이면 체크하지 않음
+        if (isRedirecting) return;
+
         const rememberedEmail = localStorage.getItem('rememberedEmail');
         if (rememberedEmail && emailRef.current) {
             emailRef.current.value = rememberedEmail;
@@ -95,7 +102,7 @@ export default function LoginPage2() {
         if (isAuthenticated) {
             router.push('/personal/dashboard');
         }
-    }, [router]);
+    }, [router, isRedirecting]);
 
     return (
         <div id="login2-wrap" className="log-bg2">
@@ -127,7 +134,7 @@ export default function LoginPage2() {
                                     type="email"
                                     onKeyPress={handleKeyPress}
                                     placeholder="이메일"
-                                    disabled={mutation.isPending}
+                                    disabled={mutation.isPending || isRedirecting}
                                     autoComplete="email"
                                 />
                             </div>
@@ -140,7 +147,7 @@ export default function LoginPage2() {
                                     type={showPassword ? "text" : "password"}
                                     onKeyPress={handleKeyPress}
                                     placeholder="비밀번호"
-                                    disabled={mutation.isPending}
+                                    disabled={mutation.isPending || isRedirecting}
                                     autoComplete="current-password"
                                 />
                                 <span
@@ -160,6 +167,7 @@ export default function LoginPage2() {
                                             id="id-rmb2"
                                             checked={rememberMe}
                                             onChange={(e) => setRememberMe(e.target.checked)}
+                                            disabled={isRedirecting}
                                         />
                                         <label htmlFor="id-rmb2">
                                             <span>기억하기</span>
@@ -172,9 +180,9 @@ export default function LoginPage2() {
                                 type="button"
                                 id="loginBtn2"
                                 onClick={handleLogin}
-                                disabled={mutation.isPending}
+                                disabled={mutation.isPending || isRedirecting}
                             >
-                                {mutation.isPending ? '로그인 중...' : '로그인'}
+                                {mutation.isPending || isRedirecting ? '로그인 중...' : '로그인'}
                             </button>
                         </div>
                         <ul className="login-notice2">
