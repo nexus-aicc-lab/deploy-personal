@@ -12,11 +12,17 @@ export interface Notice {
     updatedAt?: string;
 }
 
+export interface Pagination {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasMore: boolean;
+}
+
 export interface GetNoticeListResponse {
     notices: Notice[];
-    total?: number;
-    page?: number;
-    limit?: number;
+    pagination: Pagination;
 }
 
 export interface GetNoticeDetailResponse {
@@ -34,4 +40,15 @@ export interface CreateNoticeRequest {
 
 export interface CreateNoticeResponse {
     notice: Notice;
+}
+
+export interface UpdateNoticeRequest {
+    title?: string;
+    content?: string;
+    isImportant?: boolean;
+    isPinned?: boolean;
+}
+
+export interface DeleteNoticeResponse {
+    message: string;
 }

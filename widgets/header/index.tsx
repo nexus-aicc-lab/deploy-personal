@@ -91,8 +91,8 @@ export default function Header() {
                             )}
                         </div>
 
-                        <Link href="/settings" className="hover:text-emerald-600 transition-colors">
-                            setting
+                        <Link href="/devops" className="hover:text-emerald-600 transition-colors">
+                            devops
                         </Link>
                     </nav>
 
