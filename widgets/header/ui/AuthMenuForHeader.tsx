@@ -23,7 +23,6 @@ export default function AuthMenuForHeader() {
             { email, password },
             {
                 onSuccess: (data) => {
-                    // 수정된 응답 구조에 맞게 변경
                     const user = {
                         id: data.userId,
                         email: data.email,
@@ -35,7 +34,6 @@ export default function AuthMenuForHeader() {
                     setPassword('');
                 },
                 onError: (err: any) => {
-                    // 에러 메시지 구조 변경
                     toast.error(err?.response?.data?.message || '로그인 실패!');
                 },
             }
@@ -43,9 +41,15 @@ export default function AuthMenuForHeader() {
     };
 
     const handleLogout = () => {
-        logout();
-        toast.success('로그아웃되었습니다');
-        router.push('/personal/dashboard');
+        // 먼저 로그인 페이지로 이동
+        router.push('/personal/login2');
+
+        // 약간의 지연 후 로그아웃 처리 (부드러운 전환)
+        setTimeout(() => {
+            logout();
+            toast.success('로그아웃되었습니다');
+        }, 100);
+
         setIsOpen(false);
     };
 
@@ -63,7 +67,7 @@ export default function AuthMenuForHeader() {
                             {user.name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase()}
                         </span>
                     </div>
-                    <div className="hidden sm:block text-left">
+                    <div className="text-left">
                         <p className="text-sm font-medium text-gray-900">{user.name || '사용자'}</p>
                         <p className="text-xs text-gray-500">{user.email}</p>
                     </div>
@@ -136,55 +140,38 @@ export default function AuthMenuForHeader() {
         );
     }
 
-    // 로그인 안한 상태: 로그인 폼
+    // 로그인 안한 상태: 로그인 폼 하나로 통일
     return (
-        <>
-            {/* 데스크톱 로그인 폼 */}
-            <form onSubmit={handleLogin} className="hidden md:flex items-center space-x-3">
-                <Input
-                    type="email"
-                    placeholder="이메일"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="w-40 h-9 text-sm"
-                />
-                <Input
-                    type="password"
-                    placeholder="비밀번호"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    className="w-32 h-9 text-sm"
-                />
-                <Button
-                    type="submit"
-                    disabled={mutationForLogin.isPending}
-                    size="sm"
-                    className="h-9"
-                >
-                    {mutationForLogin.isPending ? '로그인...' : '로그인'}
+        <form onSubmit={handleLogin} className="flex items-center space-x-3">
+            <Input
+                type="email"
+                placeholder="이메일"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-40 h-9 text-sm"
+            />
+            <Input
+                type="password"
+                placeholder="비밀번호"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="w-32 h-9 text-sm"
+            />
+            <Button
+                type="submit"
+                disabled={mutationForLogin.isPending}
+                size="sm"
+                className="h-9"
+            >
+                {mutationForLogin.isPending ? '로그인...' : '로그인'}
+            </Button>
+            <Link href="/personal/signup">
+                <Button variant="outline" size="sm" className="h-9">
+                    회원가입
                 </Button>
-                <Link href="/personal/signup">
-                    <Button variant="outline" size="sm" className="h-9">
-                        회원가입
-                    </Button>
-                </Link>
-            </form>
-
-            {/* 모바일 로그인 폼 (헤더에서 별도 처리) */}
-            <div className="md:hidden flex items-center space-x-2">
-                <Link href="/personal/login">
-                    <Button variant="outline" size="sm">
-                        로그인
-                    </Button>
-                </Link>
-                <Link href="/personal/signup">
-                    <Button size="sm">
-                        회원가입
-                    </Button>
-                </Link>
-            </div>
-        </>
+            </Link>
+        </form>
     );
 }
