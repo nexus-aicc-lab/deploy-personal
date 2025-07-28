@@ -12,7 +12,8 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:seed:notice": "tsx src/db/seed/notice-seed.ts",
-    "db:seed:users": "tsx src/db/seed/user-seed.ts"
+    "db:seed:users": "tsx src/db/seed/user-seed.ts",
+    "db:seed:chat": "tsx src/db/seed/chat-seed.ts"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.6",
