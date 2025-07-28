@@ -50,7 +50,14 @@ export default function LoginPage2() {
                     }
 
                     toast.success('🎉 로그인 성공!');
-                    router.push('/personal/dashboard');
+
+                    // Zustand 상태가 완전히 업데이트될 때까지 대기
+                    setTimeout(() => {
+                        // returnUrl이 있으면 해당 경로로, 없으면 대시보드로
+                        const searchParams = new URLSearchParams(window.location.search);
+                        const returnUrl = searchParams.get('returnUrl');
+                        router.push(returnUrl ? decodeURIComponent(returnUrl) : '/personal/dashboard');
+                    }, 300); // 충분한 시간 확보
                 },
                 onError: (error: any) => {
                     setLoginError(error?.response?.data?.message || '로그인 실패!');
@@ -75,14 +82,20 @@ export default function LoginPage2() {
         setLoginError(''); // 계정 선택시 에러 메시지 초기화
     };
 
-    // 컴포넌트 마운트시 기억된 이메일 불러오기
+    // 컴포넌트 마운트시 기억된 이메일 불러오기 및 인증 상태 확인
     React.useEffect(() => {
         const rememberedEmail = localStorage.getItem('rememberedEmail');
         if (rememberedEmail && emailRef.current) {
             emailRef.current.value = rememberedEmail;
             setRememberMe(true);
         }
-    }, []);
+
+        // 이미 로그인된 상태라면 대시보드로 리다이렉트
+        const { isAuthenticated } = useAuthStore.getState();
+        if (isAuthenticated) {
+            router.push('/personal/dashboard');
+        }
+    }, [router]);
 
     return (
         <div id="login2-wrap" className="log-bg2">
@@ -172,7 +185,11 @@ export default function LoginPage2() {
 
                 {/* 테스트 계정 테이블 - 오른쪽 배치 */}
                 <div className="login2-box">
-
+                    <div className="lg2-header">
+                        <h3 className="test-account-title">
+                            테스트용 로그인 계정 (클릭 시 자동 입력)
+                        </h3>
+                    </div>
                     <div className="lg2-content">
                         <div className="test-account-table">
                             <LoginAbleUsersTable onSelectUser={handleSelectUser} />
