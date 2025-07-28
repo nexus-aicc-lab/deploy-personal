@@ -190,17 +190,17 @@ const NoticePage = () => {
                         <button
                             onClick={() => handlePageChange(currentPage - 1)}
                             disabled={currentPage === 1}
-                            className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors ${currentPage === 1
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            className={`flex items-center gap-1 px-2 py-1 text-xs rounded-md transition-colors ${currentPage === 1
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
                                 }`}
                         >
-                            <ChevronLeft className="w-4 h-4" />
+                            <ChevronLeft className="w-3 h-3" />
                             이전
                         </button>
 
                         <div className="flex items-center gap-1">
-                            <span className="text-sm text-gray-600 mr-2">
+                            <span className="text-xs text-gray-600 mr-2">
                                 {currentPage} / {pagination.totalPages} 페이지
                             </span>
 
@@ -222,9 +222,9 @@ const NoticePage = () => {
                                         <button
                                             key={pageNum}
                                             onClick={() => handlePageChange(pageNum)}
-                                            className={`w-8 h-8 text-sm rounded-md transition-colors ${currentPage === pageNum
-                                                    ? 'bg-blue-600 text-white font-medium'
-                                                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                                            className={`w-6 h-6 text-xs rounded-md transition-colors ${currentPage === pageNum
+                                                ? 'bg-blue-600 text-white font-medium'
+                                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
                                                 }`}
                                         >
                                             {pageNum}
@@ -237,13 +237,13 @@ const NoticePage = () => {
                         <button
                             onClick={() => handlePageChange(currentPage + 1)}
                             disabled={!pagination.hasMore}
-                            className={`flex items-center gap-1 px-3 py-1.5 text-sm rounded-md transition-colors ${!pagination.hasMore
-                                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
-                                    : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
+                            className={`flex items-center gap-1 px-2 py-1 text-xs rounded-md transition-colors ${!pagination.hasMore
+                                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                                : 'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50'
                                 }`}
                         >
                             다음
-                            <ChevronRight className="w-4 h-4" />
+                            <ChevronRight className="w-3 h-3" />
                         </button>
                     </div>
                 )}
