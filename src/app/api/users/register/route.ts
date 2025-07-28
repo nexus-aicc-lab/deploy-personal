@@ -1,4 +1,4 @@
-// src/app/api/users/register/route.ts
+// C:\deploy-server\deploy-personal2\src\app\api\users\register\route.ts
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcrypt';
 import { eq } from 'drizzle-orm';
@@ -8,10 +8,13 @@ import { users } from '@/db/schema/users';
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
+        console.log('Received body:', body); // 디버깅용 로그
+
         const { email, name, password } = body;
 
         // 입력값 검증
         if (!email || !name || !password) {
+            console.log('Missing fields:', { email: !!email, name: !!name, password: !!password }); // 디버깅용 로그
             return NextResponse.json(
                 { message: '모든 필드를 입력해주세요.' },
                 { status: 400 }
@@ -26,6 +29,7 @@ export async function POST(request: NextRequest) {
             .limit(1);
 
         if (existingUser.length > 0) {
+            console.log('Email already exists:', email); // 디버깅용 로그
             return NextResponse.json(
                 { message: '이미 사용 중인 이메일입니다.' },
                 { status: 400 }

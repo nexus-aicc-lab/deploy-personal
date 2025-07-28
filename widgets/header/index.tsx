@@ -36,7 +36,7 @@ export default function Header() {
 
                     {/* 🧭 중앙 메뉴 */}
                     <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-700">
-                        <Link href="/personal/login" className="hover:text-emerald-600 transition-colors">
+                        <Link href="/personal/login2" className="hover:text-emerald-600 transition-colors">
                             Login
                         </Link>
                         <Link href="/personal/manual" className="hover:text-emerald-600 transition-colors">
