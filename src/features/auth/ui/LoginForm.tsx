@@ -1,6 +1,7 @@
 // src/features/auth/ui/LoginForm.tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuthorize } from '@/features/auth/hooks/useAuthorize';
+import styles from './LoginForm.module.css';
 
 interface LoginFormProps {
     onLoginSuccess?: (token: string, agentId: string) => void;
@@ -108,12 +109,12 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
     };
 
     return (
-        <div className="lg-content">
-            <div className="info-write">
+        <div className={styles.lgContent}>
+            <div className={styles.infoWrite}>
                 <div className="agentID-wrap">
                     <input
                         ref={agentIdRef}
-                        className="in-txt agentID"
+                        className={`${styles.inTxt} agentID`}
                         id="agentID"
                         maxLength={64}
                         type="text"
@@ -122,11 +123,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                         disabled={isLoading}
                     />
                 </div>
-                <div className="pwd-wrap">
+                <div className={styles.pwdWrap}>
                     <div className="loginPWD-wrap">
                         <input
                             ref={passwordRef}
-                            className="in-txt loginPWD"
+                            className={`${styles.inTxt} loginPWD`}
                             id="loginPWD"
                             maxLength={16}
                             type={showPassword ? "text" : "password"}
@@ -136,14 +137,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                         />
                     </div>
                     <span
-                        className={`ic-eye ${showPassword ? 'view-on' : ''}`}
+                        className={`${styles.icEye} ${showPassword ? styles.viewOn : ''}`}
                         onClick={togglePasswordVisibility}
                     />
                 </div>
-                <div className="auth-wrap">
+                <div className={styles.authWrap}>
                     <input
                         ref={authNoRef}
-                        className="in-txt"
+                        className={styles.inTxt}
                         id="LoginAuthNo"
                         maxLength={6}
                         type="text"
@@ -151,18 +152,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                         style={{ display: showAuthInput ? 'block' : 'none' }}
                         disabled={isLoading}
                     />
-                    <span className="auth-text" id="authCheckTime">
+                    <span className={styles.authText} id="authCheckTime">
                         {authTime}
                     </span>
                 </div>
             </div>
-            <div className="lg-fail-txt">{loginError}</div>
+            <div className={styles.lgFailTxt}>{loginError}</div>
             <div
                 id="divReqAuth"
                 style={{ display: showAuthButton ? 'block' : 'none' }}
             >
                 <button
-                    className="sm-btn"
+                    className={styles.smBtn}
                     type="button"
                     id="requeustAuthBtn"
                     onClick={handleRequestAuth}
@@ -171,9 +172,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                     {isLoading ? '처리 중...' : '인증번호 요청'}
                 </button>
             </div>
-            <div className="set-btn">
-                <div className="typeset">
-                    <div className="right flex gap10 flex-align">
+            <div className={styles.setBtn}>
+                <div className={styles.typeset}>
+                    <div className={`${styles.right} ${styles.flex} ${styles.gap10} ${styles.flexAlign}`}>
                         <div>
                             <input type="checkbox" id="id-rmb" />
                             <label htmlFor="id-rmb">
@@ -185,7 +186,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                             style={{ display: showResetButton ? 'block' : 'none' }}
                         >
                             <button
-                                className="sm-btn"
+                                className={styles.smBtn}
                                 type="button"
                                 id="pwdResetBtn"
                                 onClick={handlePasswordReset}
@@ -197,7 +198,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                     </div>
                 </div>
                 <button
-                    className="lg-btn"
+                    className={styles.lgBtn}
                     type="button"
                     id="loginBtn"
                     onClick={handleLogin}
@@ -206,7 +207,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess, onLoginError }) =
                     {isLoading ? '로그인 중...' : '로그인'}
                 </button>
             </div>
-            <ul className="login_notice">
+            <ul className={styles.loginNotice}>
                 <li>※ 아이디와 비밀번호 입력 시 대소문자를 구분합니다.</li>
             </ul>
         </div>

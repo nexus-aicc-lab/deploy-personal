@@ -1,0 +1,44 @@
+/* LoginAbleUsersTable 전용 스타일 */
+.container {
+    margin-top: 4rem;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem !important; /* login2.css 리셋을 강제로 덮어쓰기 */
+    color: #374151;
+}
+
+.table {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    font-size: 0.875rem;
+    border-collapse: collapse;
+}
+
+.tableHeader {
+    background-color: #f3f4f6;
+}
+
+.tableHeader th {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.tableRow {
+    cursor: pointer;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.tableRow:hover {
+    background-color: #dbeafe;
+}
+
+.tableCell {
+    border: 1px solid #d1d5db;
+    padding: 0.5rem 1rem;
+}

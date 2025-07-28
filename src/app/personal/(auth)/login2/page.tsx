@@ -172,11 +172,7 @@ export default function LoginPage2() {
 
                 {/* 테스트 계정 테이블 - 오른쪽 배치 */}
                 <div className="login2-box">
-                    <div className="lg2-header">
-                        <h3 className="test-account-title">
-                            테스트용 로그인 계정 (클릭 시 자동 입력)
-                        </h3>
-                    </div>
+
                     <div className="lg2-content">
                         <div className="test-account-table">
                             <LoginAbleUsersTable onSelectUser={handleSelectUser} />

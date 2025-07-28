@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import './styles.css';
+import styles from './page.module.css';
 import LoginForm from '@/features/auth/ui/LoginForm';
 
 const LoginPage: React.FC = () => {
@@ -21,11 +21,11 @@ const LoginPage: React.FC = () => {
     };
 
     return (
-        <div id="login-wrap" className="log-bg">
-            <div className="login-box_wrap">
+        <div className={`${styles.loginWrap} ${styles.logBg}`}>
+            <div className={styles.loginBoxWrap}>
                 <div className="dki-login-wrap">
-                    <div className="login-box">
-                        <div className="lg-header">
+                    <div className={styles.loginBox}>
+                        <div className={styles.lgHeader}>
                             {/* basePath가 설정된 경우 */}
                             <Image
                                 src="/login/admin.png"
@@ -47,7 +47,7 @@ const LoginPage: React.FC = () => {
                         />
                     </div>
                 </div>
-                <div className="lg-footer">
+                <div className={styles.lgFooter}>
                     <p title="v1.0.0" id="version2">v1.0.0</p>
                 </div>
             </div>

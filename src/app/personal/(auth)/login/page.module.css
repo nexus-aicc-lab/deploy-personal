@@ -1,0 +1,165 @@
+/* LoginPage 전용 스타일 */
+.loginWrap {
+    position: relative;
+    height: 100%;
+    min-height: 100vh;
+}
+
+.loginWrap.logBg {
+    background: linear-gradient(to top, #55BEC8 45%, #e3e3e3 45%);
+}
+
+.loginBoxWrap {
+    position: absolute;
+    width: 590px;
+    top: 50%;
+    left: 50%;
+    margin: -319px 0 0 -295px;
+    box-sizing: border-box;
+}
+
+.loginBox {
+    background-color: #ffffff;
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 70px 96px 44px;
+}
+
+.lgHeader {
+    margin-bottom: 39px;
+    text-align: center;
+}
+
+.lgFooter {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+/* LoginForm 관련 스타일들 */
+.lgContent .infoWrite {
+    position: relative;
+}
+
+.lgContent .infoWrite .icEye {
+    display: inline-block;
+    position: absolute;
+    bottom: 21px;
+    right: 0;
+    cursor: pointer;
+    background: url('/login/logicon_eye.png') no-repeat 100% 50%;
+    width: 25px;
+    height: 25px;
+}
+
+.lgContent .infoWrite .icEye.viewOn {
+    background: url('/login/logicon_eye_on.png') no-repeat 100% 50%;
+    width: 25px;
+    height: 25px;
+}
+
+.lgContent .infoWrite .inTxt {
+    box-sizing: border-box;
+    border-bottom: 1px solid #282828;
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 12px;
+    font-size: 15px;
+    background-color: #fff;
+    border: 0;
+    outline: none;
+}
+
+.lgContent .infoWrite .inTxt::placeholder {
+    color: #999;
+}
+
+.lgContent .setBtn {
+    width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.lgContent .setBtn .lgBtn {
+    display: block;
+    color: #fff;
+    width: 100%;
+    height: 53px;
+    border-radius: 4px;
+    background-color: #3ABDC9;
+    font-size: 19px;
+    font-weight: 500;
+    border: 0;
+    cursor: pointer;
+}
+
+.lgContent .setBtn .lgBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.lgContent .setBtn .typeset {
+    overflow: hidden;
+    margin: 0 0px 40px;
+}
+
+.lgContent .setBtn .typeset .left {
+    float: left;
+}
+
+.lgContent .setBtn .typeset .right {
+    float: right;
+}
+
+.idRmb {
+    display: none;
+}
+
+.idRmb + .rmbLabel {
+    display: inline-block;
+    cursor: pointer;
+    background: url('/login/admin_login_radio_off.png') no-repeat 0;
+    line-height: 22px;
+    padding-left: 24px;
+    font-size: 14px;
+    color: #8e8e8e;
+}
+
+.idRmb:checked + .rmbLabel {
+    background: url('/login/admin_login_radio_on.png') no-repeat 0;
+    line-height: 22px;
+    padding-left: 24px;
+}
+
+.loginNotice {
+    margin-top: 35px;
+}
+
+.loginNotice li {
+    font-size: 14px;
+    color: #777;
+}
+
+.lgFailTxt {
+    font-size: 12px;
+    color: #cd372d;
+    text-align: center;
+    padding: 10px 0;
+    min-height: 20px;
+}
+
+.pwdWrap,
+.authWrap {
+    position: relative;
+}
+
+.smBtn {
+    border-radius: 2px;
+    border: 1px solid #A8A8A8;
+    background: #FFF;
+    line-height: 22px;
+    padding: 0 8px;
+    color: #555;
+    line-height: 26px;
+    cursor: pointer;
+}

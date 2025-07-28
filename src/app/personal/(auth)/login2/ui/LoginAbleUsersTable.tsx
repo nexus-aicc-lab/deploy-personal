@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import styles from './LoginAbleUsersTable.module.css';
 
 interface Props {
     onSelectUser: (email: string, password: string) => void;
@@ -22,26 +23,26 @@ const DEFAULT_PASSWORD = 'nexus!234';
 
 const LoginAbleUsersTable: React.FC<Props> = ({ onSelectUser }) => {
     return (
-        <div className="mt-12">
-            <h3 className="text-lg font-semibold mb-4">🧪 테스트용 로그인 계정 (클릭 시 자동 입력)</h3>
-            <table className="w-full border border-gray-300 text-sm">
-                <thead className="bg-gray-100">
+        <div className={styles.container}>
+            <h2 className={styles.title}>💼 사용 가능한 계정 목록</h2>
+            <table className={styles.table}>
+                <thead className={styles.tableHeader}>
                     <tr>
-                        <th className="border px-4 py-2 text-left">이름</th>
-                        <th className="border px-4 py-2 text-left">이메일</th>
-                        <th className="border px-4 py-2 text-left">비밀번호</th>
+                        <th>이름</th>
+                        <th>이메일</th>
+                        <th>비밀번호</th>
                     </tr>
                 </thead>
                 <tbody>
                     {sampleUsers.map((user) => (
                         <tr
                             key={user.email}
-                            className="cursor-pointer hover:bg-blue-50 transition"
+                            className={styles.tableRow}
                             onClick={() => onSelectUser(user.email, DEFAULT_PASSWORD)}
                         >
-                            <td className="border px-4 py-2">{user.name}</td>
-                            <td className="border px-4 py-2">{user.email}</td>
-                            <td className="border px-4 py-2">{DEFAULT_PASSWORD}</td>
+                            <td className={styles.tableCell}>{user.name}</td>
+                            <td className={styles.tableCell}>{user.email}</td>
+                            <td className={styles.tableCell}>{DEFAULT_PASSWORD}</td>
                         </tr>
                     ))}
                 </tbody>

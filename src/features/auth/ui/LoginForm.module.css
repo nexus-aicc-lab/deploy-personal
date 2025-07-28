@@ -1,0 +1,133 @@
+/* LoginForm 전용 스타일 */
+.lgContent {
+    /* 컨테이너 스타일 */
+}
+
+.infoWrite {
+    position: relative;
+}
+
+.icEye {
+    display: inline-block;
+    position: absolute;
+    bottom: 21px;
+    right: 0;
+    cursor: pointer;
+    background: url('/login/logicon_eye.png') no-repeat 100% 50%;
+    width: 25px;
+    height: 25px;
+}
+
+.icEye.viewOn {
+    background: url('/login/logicon_eye_on.png') no-repeat 100% 50%;
+    width: 25px;
+    height: 25px;
+}
+
+.inTxt {
+    box-sizing: border-box;
+    border-bottom: 1px solid #282828;
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 12px;
+    font-size: 15px;
+    background-color: #fff;
+    border: 0;
+    outline: none;
+}
+
+.inTxt::placeholder {
+    color: #999;
+}
+
+.setBtn {
+    width: 100%;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.lgBtn {
+    display: block;
+    color: #fff;
+    width: 100%;
+    height: 53px;
+    border-radius: 4px;
+    background-color: #3ABDC9;
+    font-size: 19px;
+    font-weight: 500;
+    border: 0;
+    cursor: pointer;
+}
+
+.lgBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.typeset {
+    overflow: hidden;
+    margin: 0 0px 40px;
+}
+
+.typeset .left {
+    float: left;
+}
+
+.typeset .right {
+    float: right;
+}
+
+.lgFailTxt {
+    font-size: 12px;
+    color: #cd372d;
+    text-align: center;
+    padding: 10px 0;
+    min-height: 20px;
+}
+
+.pwdWrap,
+.authWrap {
+    position: relative;
+}
+
+.smBtn {
+    border-radius: 2px;
+    border: 1px solid #A8A8A8;
+    background: #FFF;
+    line-height: 22px;
+    padding: 0 8px;
+    color: #555;
+    line-height: 26px;
+    cursor: pointer;
+    border: 0;
+}
+
+.loginNotice {
+    margin-top: 35px;
+}
+
+.loginNotice li {
+    font-size: 14px;
+    color: #777;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.authText {
+    font-size: 12px;
+    color: #999;
+}
+
+/* Utility classes */
+.flex {
+    display: flex;
+}
+
+.flexAlign {
+    align-items: center;
+}
+
+.gap10 {
+    gap: 10px;
+}
