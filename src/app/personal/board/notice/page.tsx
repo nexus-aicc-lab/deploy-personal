@@ -1,105 +1,132 @@
 // src\app\personal\board\notice\page.tsx
 'use client'
 
-import React, { useState } from 'react'
-import { Calendar, User, Eye, ChevronRight } from 'lucide-react'
-
-interface Notice {
-    id: number
-    title: string
-    author: string
-    date: string
-    views: number
-    content: string
-    important?: boolean
-}
-
-// 샘플 데이터
-const sampleNotices: Notice[] = [
-    {
-        id: 1,
-        title: '[중요] 시스템 정기 점검 안내',
-        author: '관리자',
-        date: '2024-01-15',
-        views: 234,
-        content: '안녕하세요. UCTI Personal 관리자입니다.\n\n다음과 같이 시스템 정기 점검을 실시할 예정이오니 참고 부탁드립니다.\n\n■ 점검 일시: 2024년 1월 20일(토) 02:00 ~ 06:00 (4시간)\n■ 점검 내용: 서버 보안 패치 및 데이터베이스 최적화\n■ 영향: 점검 시간 동안 서비스 이용 불가\n\n점검 시간 동안 불편을 드려 죄송합니다.\n보다 나은 서비스를 위해 최선을 다하겠습니다.\n\n감사합니다.',
-        important: true
-    },
-    {
-        id: 2,
-        title: '새로운 기능 업데이트 안내',
-        author: '개발팀',
-        date: '2024-01-14',
-        views: 156,
-        content: '이번 업데이트에서 추가된 주요 기능을 안내드립니다.\n\n1. 다크모드 지원\n2. 실시간 알림 기능\n3. 파일 드래그앤드롭 업로드\n4. 검색 필터 기능 강화\n\n자세한 사용법은 매뉴얼을 참고해주세요.'
-    },
-    {
-        id: 3,
-        title: '2024년 1월 정기 회의 일정',
-        author: '운영팀',
-        date: '2024-01-10',
-        views: 89,
-        content: '2024년 1월 정기 회의 일정을 공유드립니다.\n\n날짜: 2024년 1월 25일(목)\n시간: 오후 2시\n장소: 3층 대회의실\n\n참석 대상: 전 직원'
-    },
-    {
-        id: 4,
-        title: '보안 정책 변경 사항',
-        author: '보안팀',
-        date: '2024-01-08',
-        views: 201,
-        content: '보안 강화를 위해 다음과 같이 정책이 변경됩니다.\n\n- 비밀번호 변경 주기: 90일\n- 2단계 인증 의무화\n- VPN 사용 권장\n\n시행일: 2024년 2월 1일부터'
-    },
-    {
-        id: 5,
-        title: '신입 직원 환영합니다',
-        author: '인사팀',
-        date: '2024-01-05',
-        views: 342,
-        content: '2024년 상반기 신입 직원을 환영합니다!\n\n입사일: 2024년 1월 15일\n오리엔테이션: 1월 15일 오전 9시\n\n모두 따뜻하게 맞이해주세요.'
-    }
-]
+import React, { useState, useEffect } from 'react'
+import { Calendar, User, Eye, ChevronRight, AlertCircle, Loader2 } from 'lucide-react'
+import { useNoticeList, useNoticeDetail } from '@/features/board/hooks/useNoticeBoard'
+import type { Notice } from '@/features/board/types/board.types'
 
 const NoticePage = () => {
-    const [selectedNotice, setSelectedNotice] = useState<Notice | null>(sampleNotices[0])
+    const [selectedNoticeId, setSelectedNoticeId] = useState<string | null>(null)
+
+    // API 호출
+    const { data: listData, isLoading: listLoading, error: listError } = useNoticeList()
+    const { data: detailData, isLoading: detailLoading } = useNoticeDetail(selectedNoticeId || '')
+
+    const notices = listData?.notices || []
+    const selectedNotice = detailData?.notice
+
+    // 첫 번째 공지사항 자동 선택
+    useEffect(() => {
+        if (notices.length > 0 && !selectedNoticeId) {
+            setSelectedNoticeId(notices[0].id)
+        }
+    }, [notices, selectedNoticeId])
+
+    // 공지사항 클릭 핸들러
+    const handleNoticeClick = (noticeId: string) => {
+        setSelectedNoticeId(noticeId)
+    }
+
+    // 날짜 포맷팅
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString)
+        return date.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+        })
+    }
+
+    // 로딩 상태
+    if (listLoading) {
+        return (
+            <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+                <div className="text-center">
+                    <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-2" />
+                    <p className="text-gray-500">공지사항을 불러오는 중...</p>
+                </div>
+            </div>
+        )
+    }
+
+    // 에러 상태
+    if (listError) {
+        return (
+            <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+                <div className="text-center">
+                    <AlertCircle className="w-12 h-12 text-red-500 mx-auto mb-2" />
+                    <p className="text-gray-700 font-medium">공지사항을 불러올 수 없습니다</p>
+                    <p className="text-gray-500 text-sm mt-1">잠시 후 다시 시도해주세요</p>
+                </div>
+            </div>
+        )
+    }
+
+    // 데이터가 없는 경우
+    if (notices.length === 0) {
+        return (
+            <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+                <div className="text-center">
+                    <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <AlertCircle className="w-8 h-8 text-gray-400" />
+                    </div>
+                    <p className="text-gray-700 font-medium">등록된 공지사항이 없습니다</p>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <div className="flex gap-6 h-[calc(100vh-200px)]">
             {/* 왼쪽: 공지사항 리스트 */}
             <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                 <div className="p-4 border-b border-gray-200">
-                    <h2 className="text-lg font-semibold text-gray-800">공지사항</h2>
+                    <div className="flex items-center justify-between">
+                        <h2 className="text-lg font-semibold text-gray-800">공지사항</h2>
+                        <span className="text-sm text-gray-500">총 {notices.length}개</span>
+                    </div>
                 </div>
                 <div className="overflow-y-auto h-[calc(100%-60px)]">
-                    {sampleNotices.map((notice) => (
+                    {notices.map((notice) => (
                         <div
                             key={notice.id}
-                            onClick={() => setSelectedNotice(notice)}
-                            className={`p-4 border-b border-gray-100 cursor-pointer transition-colors hover:bg-gray-50 ${selectedNotice?.id === notice.id ? 'bg-blue-50' : ''
+                            onClick={() => handleNoticeClick(notice.id)}
+                            className={`p-4 border-b border-gray-100 cursor-pointer transition-colors hover:bg-gray-50 ${selectedNoticeId === notice.id ? 'bg-blue-50 border-l-4 border-l-blue-500' : ''
                                 }`}
                         >
                             <div className="flex items-start justify-between mb-2">
                                 <h3 className="font-medium text-gray-800 flex-1 pr-2">
-                                    {notice.important && (
+                                    {notice.isPinned && (
+                                        <span className="inline-block px-2 py-0.5 bg-blue-100 text-blue-700 text-xs rounded mr-2">
+                                            고정
+                                        </span>
+                                    )}
+                                    {notice.isImportant && (
                                         <span className="inline-block px-2 py-0.5 bg-red-100 text-red-700 text-xs rounded mr-2">
                                             중요
                                         </span>
                                     )}
                                     {notice.title}
                                 </h3>
-                                <ChevronRight className="w-4 h-4 text-gray-400 mt-0.5" />
+                                <ChevronRight className={`w-4 h-4 text-gray-400 mt-0.5 transition-transform ${selectedNoticeId === notice.id ? 'rotate-90' : ''
+                                    }`} />
                             </div>
                             <div className="flex items-center gap-4 text-xs text-gray-500">
                                 <span className="flex items-center gap-1">
                                     <User className="w-3 h-3" />
-                                    {notice.author}
+                                    {notice.authorName}
+                                    {notice.authorDepartment && (
+                                        <span className="text-gray-400">({notice.authorDepartment})</span>
+                                    )}
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <Calendar className="w-3 h-3" />
-                                    {notice.date}
+                                    {formatDate(notice.createdAt)}
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <Eye className="w-3 h-3" />
-                                    {notice.views}
+                                    {notice.viewCount.toLocaleString()}
                                 </span>
                             </div>
                         </div>
@@ -109,11 +136,23 @@ const NoticePage = () => {
 
             {/* 오른쪽: 상세 내용 */}
             <div className="flex-1 bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-                {selectedNotice ? (
+                {detailLoading ? (
+                    <div className="flex items-center justify-center h-full">
+                        <div className="text-center">
+                            <Loader2 className="w-8 h-8 animate-spin text-blue-600 mx-auto mb-2" />
+                            <p className="text-gray-500">내용을 불러오는 중...</p>
+                        </div>
+                    </div>
+                ) : selectedNotice ? (
                     <>
                         <div className="p-6 border-b border-gray-200">
                             <h2 className="text-xl font-semibold text-gray-800 mb-3">
-                                {selectedNotice.important && (
+                                {selectedNotice.isPinned && (
+                                    <span className="inline-block px-2 py-1 bg-blue-100 text-blue-700 text-sm rounded mr-2">
+                                        고정
+                                    </span>
+                                )}
+                                {selectedNotice.isImportant && (
                                     <span className="inline-block px-2 py-1 bg-red-100 text-red-700 text-sm rounded mr-2">
                                         중요
                                     </span>
@@ -123,21 +162,24 @@ const NoticePage = () => {
                             <div className="flex items-center gap-4 text-sm text-gray-600">
                                 <span className="flex items-center gap-1">
                                     <User className="w-4 h-4" />
-                                    {selectedNotice.author}
+                                    {selectedNotice.authorName}
+                                    {selectedNotice.authorDepartment && (
+                                        <span className="text-gray-500">({selectedNotice.authorDepartment})</span>
+                                    )}
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
-                                    {selectedNotice.date}
+                                    {formatDate(selectedNotice.createdAt)}
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <Eye className="w-4 h-4" />
-                                    조회수 {selectedNotice.views}
+                                    조회수 {selectedNotice.viewCount.toLocaleString()}
                                 </span>
                             </div>
                         </div>
                         <div className="p-6 overflow-y-auto h-[calc(100%-120px)]">
                             <div className="prose prose-sm max-w-none">
-                                <pre className="whitespace-pre-wrap font-sans text-gray-700">
+                                <pre className="whitespace-pre-wrap font-sans text-gray-700 leading-relaxed">
                                     {selectedNotice.content}
                                 </pre>
                             </div>
@@ -145,7 +187,12 @@ const NoticePage = () => {
                     </>
                 ) : (
                     <div className="flex items-center justify-center h-full text-gray-400">
-                        <p>공지사항을 선택해주세요</p>
+                        <div className="text-center">
+                            <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Eye className="w-8 h-8 text-gray-400" />
+                            </div>
+                            <p>공지사항을 선택해주세요</p>
+                        </div>
                     </div>
                 )}
             </div>
