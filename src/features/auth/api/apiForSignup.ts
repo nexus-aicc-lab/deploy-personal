@@ -8,15 +8,13 @@ export interface SignupRequest {
 }
 
 export interface SignupResponse {
-    message: string;
-    user: {
-        id: number;
-        email: string;
-        name: string;
-    };
+    id: number;
+    email: string;
+    name: string;
+    createdAt: string;
 }
 
 export async function apiForSignup(payload: SignupRequest) {
-    const response = await axios.post<SignupResponse>('/api/auth/signup', payload);
+    const response = await axios.post<SignupResponse>('/api/users/register', payload);
     return response.data;
 }
