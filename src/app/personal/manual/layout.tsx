@@ -39,7 +39,7 @@ export default function ManualLayout({
                     </div>
 
                     {/* 푸터 */}
-                    <Footer />
+                    {/* <Footer /> */}
                 </div>
             </Providers>
         </div>
