@@ -102,8 +102,8 @@ const menuGroups: { label: string; items: MenuItem[] }[] = [
                 icon: Zap,
                 children: [
                     { label: "개요", href: "/personal/manual/overview", icon: FileText },
-                    { label: "기본 설치", href: "/personal/manual/installation1", icon: Settings },
-                    { label: "기본 설치", href: "/personal/manual/installation2", icon: Settings },
+                    { label: "론처 프로젝트 설치", href: "/personal/manual/installation1", icon: Settings },
+                    { label: "personal 앱 설치", href: "/personal/manual/installation2", icon: Settings },
                 ]
             },
         ]
