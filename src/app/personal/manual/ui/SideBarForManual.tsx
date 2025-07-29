@@ -102,8 +102,7 @@ const menuGroups: { label: string; items: MenuItem[] }[] = [
                 icon: Zap,
                 children: [
                     { label: "개요", href: "/personal/manual/overview", icon: FileText },
-                    { label: "론처 프로젝트 설치", href: "/personal/manual/installation1", icon: Settings },
-                    { label: "personal 앱 설치", href: "/personal/manual/installation2", icon: Settings },
+
                 ]
             },
         ]
@@ -115,10 +114,9 @@ const menuGroups: { label: string; items: MenuItem[] }[] = [
                 label: "설치",
                 icon: Download,
                 children: [
-                    { label: "시스템 요구사항", href: "/personal/manual/requirements", icon: AlertCircle },
-                    { label: "Windows 설치", href: "/personal/manual/install-windows", icon: Terminal },
-                    { label: "MacOS 설치", href: "/personal/manual/install-macos", icon: Terminal },
-                    { label: "Linux 설치", href: "/personal/manual/install-linux", icon: Terminal },
+                    { label: "론처 프로젝트 설치", href: "/personal/manual/installation1", icon: Settings },
+                    { label: "personal 앱 설치", href: "/personal/manual/installation2", icon: Settings },
+                    { label: "사내망 아이피 설정", href: "/personal/manual/hosts", icon: Terminal },
                 ]
             },
             {
